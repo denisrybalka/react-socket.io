@@ -1,14 +1,12 @@
 import React from 'react';
-import io from 'socket.io-client'
+import socket from './socket'
 
 function App() {
-  const socketConnect = () => {
-    io("http://localhost:9999");
-  }
-
   return (
     <div className="App">
-      <button onClick={socketConnect}>Connect</button>
+      <input type="text" placeholder="Room ID" value="" />
+      <input type="text" placeholder="Username" value="" />
+      <button>ENTER</button>
     </div>
   );
 }

@@ -1,9 +1,11 @@
 const reducer = (state, action) => {
     switch (action.type) {
-        case "IS_AUTH":
+        case "JOINED":
             return {
                 ...state,
-                isAuth: action.payload,
+                joined: true,
+                username: action.payload.username,
+                roomId: action.payload.roomId,
             }
         default:
             return state;

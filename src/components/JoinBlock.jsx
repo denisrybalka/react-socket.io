@@ -20,16 +20,17 @@ const JoinBlock = ({ onLogin }) => {
         })
     }
 
-    const onEnter = (e) => {
+    const onEnter = async (e) => {
         e.preventDefault();
         setLoading(true);
         const { roomId, username } = input;
         if (!roomId || !username) {
             return alert("Неверные данные!");
         }
-        axios.post("/rooms", {
-            roomId, username,
-        }).then(onLogin);
+
+        const user = { roomId, username};
+        await axios.post("/rooms", user);
+        onLogin(user);
     }
 
     return (

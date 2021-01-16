@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-const io = require("socket.io")(server,{cors: {origin: "*"}});
+const io = require("socket.io")(server, { cors: { origin: "*" } });
 
+app.use(express.json());
 
 const rooms = new Map();
 
@@ -12,6 +13,19 @@ app.get("/rooms", (req, res) => {
 
 io.on("connection", socket => {
     console.log("socket connected", socket.id);
+})
+
+app.post("/rooms", (req, res) => {
+    const { roomId, username } = req.body;
+
+    if (!rooms.has(roomId)) {
+        rooms.set(roomId, new Map([
+            ['users', new Map()],
+            ['messages', []],
+        ]))
+    }
+
+    res.send(rooms);
 })
 
 server.listen(9999, (err) => {

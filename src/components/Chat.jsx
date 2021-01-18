@@ -1,19 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 
-const Chat = () => {
+const Chat = ({users, messages}) => {
+
+    const [message, setMessage] = useState('');
+
+    const handleMessageSent = (e) => {
+        e.preventDefault();
+        console.log(message);
+    }
+
   return (
     <div className="container">
       <div className="users">
-        <p>Users</p>
-        <div className="user">Test user</div>
+        <p>{`Users online(${users.length})`}</p>
+        <ul className="users-list">
+          {users.map((name,index) => <li key={index}>{name}</li>)}
+        </ul>
       </div>
       <div>
         <div className="messages">
           <p className="message">Hello</p>
           <p className="message">Hello 2</p>
         </div>
-        <form>
-          <input type="text" placeholder="Your message" />
+        <form onSubmit={handleMessageSent}>
+          <input type="text" placeholder="Your message" value={message} onChange={(e) => setMessage(e.target.value)} />
           <button>Send</button>
         </form>
       </div>

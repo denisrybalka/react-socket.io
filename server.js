@@ -9,11 +9,13 @@ app.use(express.urlencoded({ extended: true }));
 const rooms = new Map();
 
 app.get("/rooms/:id", (req, res) => {
-  const { id : roomId } = req.params;
-  const obj = rooms.has(roomId) ? {
-    users: [...rooms.get(roomId).get("users").values()],
-    messages: [...rooms.get(roomId).get("messages").values()],
-  } : { users: [], messages: [] };
+  const { id: roomId } = req.params;
+  const obj = rooms.has(roomId)
+    ? {
+        users: [...rooms.get(roomId).get("users").values()],
+        messages: [...rooms.get(roomId).get("messages").values()],
+      }
+    : { users: [], messages: [] };
   res.json(obj);
 });
 
@@ -32,6 +34,12 @@ io.on("connection", (socket) => {
         socket.to(roomId).broadcast.emit("ROOM:SET_USERS", users); // everyone except me
       }
     });
+  });
+
+  socket.on("ROOM:NEW_MESSAGE", ({ roomId, username, text }) => {
+    const obj = { username, text };
+    rooms.get(roomId).get("messages").push(obj);
+    socket.to(roomId).broadcast.emit("ROOM:NEW_MESSAGE", obj);
   });
 
   console.log("socket connected", socket.id);

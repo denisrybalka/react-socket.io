@@ -12,10 +12,16 @@ const reducer = (state, action) => {
         ...state,
         users: action.payload,
       };
-    case "SET_MESSAGES":
+    case "SET_DATA": // all prev messages in room
       return {
         ...state,
-        messages: action.payload,
+        users: action.payload.users,
+        messages: action.payload.messages,
+      };
+    case "NEW_MESSAGE":
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
       };
     default:
       return state;

@@ -1,29 +1,51 @@
-import React, {useState} from "react";
+import React, { useState, useRef, useEffect } from "react";
+import socket from "../socket";
 
-const Chat = ({users, messages}) => {
+const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
+  const [message, setMessage] = useState("");
+  const messageRef = useRef(null);
 
-    const [message, setMessage] = useState('');
+  const handleMessageSent = (e) => {
+    e.preventDefault();
+    socket.emit("ROOM:NEW_MESSAGE", { username, text: message, roomId });
+    onAddMessage({ username, text: message });
+    setMessage("");
+  };
 
-    const handleMessageSent = (e) => {
-        e.preventDefault();
-        console.log(message);
-    }
+  useEffect(() => {
+    messageRef.current.scrollTo(0, 9999);
+  }, [messages])
 
   return (
     <div className="container">
       <div className="users">
-        <p>{`Users online(${users.length})`}</p>
+        <p>Room: {roomId}</p>
+        <p>{`Online(${users.length}):`}</p>
         <ul className="users-list">
-          {users.map((name,index) => <li key={index}>{name}</li>)}
+          {users.map((name, index) => (
+            <li key={index}>{name}</li>
+          ))}
         </ul>
       </div>
       <div>
-        <div className="messages">
-          <p className="message">Hello</p>
-          <p className="message">Hello 2</p>
+        <div className="messages" 
+              ref={messageRef}>
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={msg.username === username ? "my-message" : "message"}
+              >
+              {msg.text}
+            </div>
+          ))}
         </div>
         <form onSubmit={handleMessageSent}>
-          <input type="text" placeholder="Your message" value={message} onChange={(e) => setMessage(e.target.value)} />
+          <input
+            type="text"
+            placeholder="Your message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
           <button>Send</button>
         </form>
       </div>

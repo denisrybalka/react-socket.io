@@ -31,14 +31,26 @@ code {
 }
 
 .messages {
+  display: flex;
+  flex-direction: column;
   width: 400px;
   height: 200px;
   overflow-y: auto;
 }
 
-.message {
+.message, .my-message{
   width: fit-content;
   background-color: lightpink;
   padding: 10px;
   max-width: 300px;
+}
+
+.message {
+  margin-left: 25px;
+}
+
+.my-message {
+  background-color: lightseagreen;
+  margin-right: 25px;
+  align-self: flex-end;
 }

@@ -12,9 +12,12 @@ app.get("/rooms", (req, res) => {
 });
 
 io.on("connection", socket => {
-    socket.on('ROOM:JOIN', (data) => {
-        console.log(data);
-    })
+    socket.on('ROOM:JOIN', ({roomId, username}) => {
+        socket.join(roomId);
+        rooms.get(roomId).get('users').set(socket.id, username);
+        const users = [...rooms.get(roomId).get('users').values()];
+        socket.to(roomId).broadcast.emit("ROOM:JOINED", users); // everyone except me
+    });
     console.log("socket connected", socket.id);
 })
 

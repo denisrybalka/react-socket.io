@@ -14,7 +14,7 @@ const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
 
   useEffect(() => {
     messageRef.current.scrollTo(0, 9999);
-  }, [messages])
+  }, [messages]);
 
   return (
     <div className="container">
@@ -28,14 +28,23 @@ const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
         </ul>
       </div>
       <div>
-        <div className="messages" 
-              ref={messageRef}>
+        <div className="messages" ref={messageRef}>
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={msg.username === username ? "my-message" : "message"}
+              className="message"
+              style={{ alignSelf: msg.username === username && "flex-end" }}
+            >
+              <div
+                className="text"
+                style={{
+                  backgroundColor:
+                    msg.username === username ? "lightsalmon" : "lightblue",
+                }}
               >
-              {msg.text}
+                {msg.text}
+              </div>
+              <div className="username">{msg.username}</div>
             </div>
           ))}
         </div>
@@ -43,6 +52,8 @@ const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
           <input
             type="text"
             placeholder="Your message"
+            required
+            minLength={1}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />

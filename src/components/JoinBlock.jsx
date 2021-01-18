@@ -25,6 +25,7 @@ const JoinBlock = ({ onLogin }) => {
         setLoading(true);
         const { roomId, username } = input;
         if (!roomId || !username) {
+            setLoading(false);
             return alert("Неверные данные!");
         }
 
@@ -34,7 +35,7 @@ const JoinBlock = ({ onLogin }) => {
     }
 
     return (
-        <form onSubmit={onEnter}>
+        <form className="join-form" onSubmit={onEnter}>
             <input
                 type="text"
                 placeholder="Room ID"

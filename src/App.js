@@ -21,7 +21,7 @@ function App() {
     });
 
     socket.emit("ROOM:JOIN", user);
-    const { data } = await axios.get(`/rooms/${user.roomId}`);
+    const { data } = await axios.get(`http://localhost:9999/rooms/${user.roomId}`);
     dispatch({
       type: "SET_DATA",
       payload: data,

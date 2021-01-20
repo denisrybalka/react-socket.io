@@ -30,7 +30,7 @@ const JoinBlock = ({ onLogin }) => {
 
     const user = { roomId, username };
     await axios
-      .post("/rooms", user)
+      .post("http://localhost:9999/rooms", user)
       .then(() => onLogin(user))
       .catch((e) => {
         setLoading(false);
@@ -42,14 +42,14 @@ const JoinBlock = ({ onLogin }) => {
     <form className="join-form" onSubmit={onEnter}>
       <input
         type="text"
-        placeholder="Room ID"
+        placeholder="ID Комнаты"
         name="roomId"
         value={input.roomId}
         onChange={handleInputChange}
       />
       <input
         type="text"
-        placeholder="Username"
+        placeholder="Имя"
         name="username"
         value={input.username}
         onChange={handleInputChange}

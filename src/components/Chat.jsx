@@ -19,8 +19,8 @@ const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
   return (
     <div className="container">
       <div className="users">
-        <p>Room: {roomId}</p>
-        <p>{`Online(${users.length}):`}</p>
+        <p>Комната: {roomId}</p>
+        <p>{`Онлайн (${users.length}):`}</p>
         <ul className="users-list">
           {users.map((name, index) => (
             <li key={index}>{name}</li>
@@ -48,16 +48,16 @@ const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
             </div>
           ))}
         </div>
-        <form onSubmit={handleMessageSent}>
+        <form className="message-form" onSubmit={handleMessageSent}>
           <input
             type="text"
-            placeholder="Your message"
+            placeholder="Сообщение"
             required
             minLength={1}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button>Send</button>
+          <button>Отправить</button>
         </form>
       </div>
     </div>

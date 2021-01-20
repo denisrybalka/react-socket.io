@@ -39,7 +39,7 @@ const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
                 className="text"
                 style={{
                   backgroundColor:
-                    msg.username === username ? "lightsalmon" : "lightblue",
+                    msg.username !== username ? "lightsalmon" : "limegreen",
                 }}
               >
                 {msg.text}
@@ -48,17 +48,17 @@ const Chat = ({ users, messages, username, roomId, onAddMessage }) => {
             </div>
           ))}
         </div>
-        <form className="message-form" onSubmit={handleMessageSent}>
-          <input
-            type="text"
-            placeholder="Сообщение"
-            required
-            minLength={1}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button>Отправить</button>
-        </form>
+          <form className="message-form" onSubmit={handleMessageSent}>
+            <input
+              type="text"
+              placeholder="Сообщение"
+              required
+              minLength={1}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button>Отправить</button>
+          </form>
       </div>
     </div>
   );

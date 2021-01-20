@@ -30,7 +30,7 @@ const JoinBlock = ({ onLogin }) => {
 
     const user = { roomId, username };
     await axios
-      .post("http://localhost:9999/rooms", user)
+      .post("https://react-socketio-chat-server.herokuapp.com/rooms", user)
       .then(() => onLogin(user))
       .catch((e) => {
         setLoading(false);
